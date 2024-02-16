@@ -37,13 +37,20 @@ export function shout(message: string): string {
  * Consumes a string (a message) and returns a boolean if the string ends in a question
  * mark. Do not use an `if` statement in solving this question.
  */
-export function isQuestion(message: string): boolean {}
-
+export function isQuestion(message: string): boolean {
+    return message.charAt(message.length - 1) === "?";
+}
 /**
  * Consumes a word (a string) and returns either `true`, `false`, or `null`. If the string
  * is "yes" (upper or lower case), then return `true`. If the string is "no" (again, either
  * upper or lower case), then return `false`. Otherwise, return `null`.
  */
 export function convertYesNo(word: string): boolean | null {
-    return true;
+    if (word.toLowerCase() === "yes") {
+        return true;
+    } else if (word.toLowerCase() === "no") {
+        return false;
+    } else {
+        return null;
+    }
 }
