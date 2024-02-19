@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /**
  * Consume an array of numbers, and return a new array containing
  * JUST the first and last number. If there are no elements, return
@@ -5,7 +6,13 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    if (numbers.length === 0) {
+        return [];
+    }
+    if (numbers.length === 1) {
+        return [numbers[0], numbers[0]];
+    }
+    return [numbers[0], numbers[numbers.length - 1]];
 }
 
 /**
@@ -13,7 +20,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const tripled = numbers.map((num: number): number => num * 3);
+    return tripled;
 }
 
 /**
@@ -21,7 +29,14 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const nums = numbers.map((num: string): number => {
+        if (!isNaN(parseInt(num))) {
+            return parseInt(num);
+        } else {
+            return 0;
+        }
+    });
+    return nums;
 }
 
 /**
@@ -32,7 +47,11 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const dollar = amounts.map((amount: string): number => {
+        const result = parseInt(amount.replace("$", ""));
+        return isNaN(result) ? 0 : result;
+    });
+    return dollar;
 };
 
 /**
@@ -41,7 +60,14 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const exclaimed = messages.map((message: string): string =>
+        message.endsWith("!")
+            ? message.toUpperCase() //exclaim!
+            : message.endsWith("?") //mark ? as empty
+            ? ""
+            : message
+    );
+    return exclaimed.filter((message) => message !== ""); //remove empty strings
 };
 
 /**
