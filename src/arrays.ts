@@ -1,4 +1,7 @@
 /* eslint-disable indent */
+
+import { isNumberObject } from "util/types";
+
 /**
  * Consume an array of numbers, and return a new array containing
  * JUST the first and last number. If there are no elements, return
@@ -119,5 +122,18 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const copy = [...values];
+    const firstNegative = copy.findIndex((num: number): boolean => num < 0);
+    const sum = copy.reduce(
+        (currentTotal: number, num: number) => currentTotal + num,
+        0
+    );
+    if (firstNegative === -1) {
+        return [...copy, sum];
+    }
+    const result = copy.map((value: number, index: number) =>
+        index === firstNegative ? sum + value : value
+    );
+
+    return result;
 }
