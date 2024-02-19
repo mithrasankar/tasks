@@ -67,7 +67,7 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
             ? ""
             : message
     );
-    return exclaimed.filter((message) => message !== ""); //remove empty strings
+    return exclaimed.filter((message: string): boolean => message !== ""); //remove empty strings
 };
 
 /**
@@ -75,7 +75,8 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const short = words.filter((word: string): boolean => word.length < 4);
+    return short.length;
 }
 
 /**
@@ -84,7 +85,12 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    const rainbow = colors.every((color: string): boolean =>
+        color === ""
+            ? true
+            : color === "red" || color === "blue" || color === "green"
+    );
+    return rainbow;
 }
 
 /**
@@ -95,7 +101,12 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    const sum = addends.reduce(
+        (currentTotal: number, num: number) => currentTotal + num,
+        0
+    );
+    const result = addends.length === 0 ? "0" : addends.join("+");
+    return sum + "=" + result;
 }
 
 /**
