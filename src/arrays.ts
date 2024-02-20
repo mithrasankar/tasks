@@ -89,9 +89,7 @@ export function countShortWords(words: string[]): number {
  */
 export function allRGB(colors: string[]): boolean {
     const rainbow = colors.every((color: string): boolean =>
-        color === ""
-            ? true
-            : color === "red" || color === "blue" || color === "green"
+        !color ? true : color === "red" || color === "blue" || color === "green"
     );
     return rainbow;
 }
@@ -124,16 +122,34 @@ export function makeMath(addends: number[]): string {
 export function injectPositive(values: number[]): number[] {
     const copy = [...values];
     const firstNegative = copy.findIndex((num: number): boolean => num < 0);
+    const negCopy = values.slice(0, firstNegative);
+    const negSum = negCopy.reduce(
+        (currentTotal: number, num: number) => currentTotal + num,
+        0
+    );
     const sum = copy.reduce(
         (currentTotal: number, num: number) => currentTotal + num,
         0
     );
     if (firstNegative === -1) {
-        return [...copy, sum];
+        copy.push(sum);
+    } else {
+        copy.splice(firstNegative + 1, 0, negSum);
     }
-    const result = copy.map((value: number, index: number) =>
-        index === firstNegative ? sum + value : value
-    );
-
-    return result;
+    return copy;
 }
+
+/*/export function injectPositive(values: number[]): number[] {
+    const copy = [...values];
+    const firstNegative = copy.findIndex((num: number): boolean => num < 0);
+    const sum = copy.reduce(
+        (currentTotal: number, num: number) => currentTotal + num,
+        0
+    );
+    if (firstNegative === -1) {
+        copy.push(sum);
+    } else {
+        copy.splice(firstNegative, 0, sum);
+    }
+    return copy;
+    */
