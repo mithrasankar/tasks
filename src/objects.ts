@@ -10,7 +10,16 @@ export function makeBlankQuestion(
     name: string,
     type: QuestionType
 ): Question {
-    return {};
+    return {
+        id,
+        name,
+        body: "",
+        expected: "",
+        options: [],
+        points: 1,
+        published: false,
+        type
+    };
 }
 
 /**
@@ -21,7 +30,9 @@ export function makeBlankQuestion(
  * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
-    return false;
+    const compareAns = answer.trim().toLowerCase();
+    const compareExp = question.expected.trim().toLowerCase();
+    return compareAns === compareExp;
 }
 
 /**
@@ -31,7 +42,12 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    return false;
+    if (question.type === "multiple_choice_question") {
+        return question.options.includes(answer);
+    } else if (question.type === "short_answer_question") {
+        return true;
+    }
+    return true;
 }
 
 /**
@@ -41,7 +57,8 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    const name = question.name.substring(0, 10);
+    return question.id + ": " + name;
 }
 
 /**
@@ -62,7 +79,20 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    return "";
+    let result = "# " + question.name + "\n" + question.body;
+    if (question.type === "multiple_choice_question") {
+        result +=
+            "\n" +
+            "- " +
+            question.options[0] +
+            "\n" +
+            "- " +
+            question.options[1] +
+            "\n" +
+            "- " +
+            question.options[2];
+    }
+    return result;
 }
 
 /**
@@ -70,7 +100,9 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    return question;
+    const resultQuestion = { ...question };
+    resultQuestion.name = newName;
+    return resultQuestion;
 }
 
 /**
@@ -79,7 +111,13 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
-    return question;
+    const resultQuestion = { ...question };
+    if (resultQuestion.published === true) {
+        resultQuestion.published = false;
+    } else {
+        resultQuestion.published = true;
+    }
+    return resultQuestion;
 }
 
 /**
@@ -89,7 +127,11 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    const resultQuestion = { ...oldQuestion };
+    resultQuestion.name = "Copy of " + oldQuestion.name;
+    resultQuestion.published = false;
+    resultQuestion.id = id;
+    return resultQuestion;
 }
 
 /**
@@ -100,7 +142,11 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  * Check out the subsection about "Nested Fields" for more information.
  */
 export function addOption(question: Question, newOption: string): Question {
-    return question;
+    const resultQuestion = {
+        ...question,
+        options: [...question.options, newOption]
+    };
+    return resultQuestion;
 }
 
 /**
@@ -117,5 +163,11 @@ export function mergeQuestion(
     contentQuestion: Question,
     { points }: { points: number }
 ): Question {
-    return contentQuestion;
+    return {
+        ...contentQuestion,
+        id,
+        name,
+        points: points,
+        published: false
+    };
 }
