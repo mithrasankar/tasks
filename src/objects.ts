@@ -127,10 +127,12 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    const resultQuestion = { ...oldQuestion };
-    resultQuestion.name = "Copy of " + oldQuestion.name;
-    resultQuestion.published = false;
-    resultQuestion.id = id;
+    const resultQuestion = {
+        ...oldQuestion,
+        name: "Copy of " + oldQuestion.name,
+        published: false,
+        id: id
+    };
     return resultQuestion;
 }
 
