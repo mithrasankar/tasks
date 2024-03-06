@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 /**
  * Consume an array of numbers, and return a new array containing
  * JUST the first and last number. If there are no elements, return
@@ -60,14 +59,15 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    const exclaimed = messages.map((message: string): string =>
-        message.endsWith("!")
-            ? message.toUpperCase() //exclaim!
-            : message.endsWith("?") //mark ? as empty
-            ? ""
+    const newMessages = messages.filter(
+        (message: string): boolean => message !== "" && !message.endsWith("?")
+    ); //remove empty strings
+    const exclaimed = newMessages.map((message: string): string =>
+        message.charAt(message.length - 1) === "!"
+            ? message.toUpperCase()
             : message
     );
-    return exclaimed.filter((message: string): boolean => message !== ""); //remove empty strings
+    return exclaimed;
 };
 
 /**
