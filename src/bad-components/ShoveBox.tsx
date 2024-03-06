@@ -19,7 +19,7 @@ export function ShoveBox(): JSX.Element {
     const [position, setPosition] = useState<number>(10);
 
     function MoveableBox(): JSX.Element {
-        const [boxPosition, setBoxPosition] = useState<number>(position);
+        const [boxPosition] = useState<number>(position);
 
         return (
             <div
