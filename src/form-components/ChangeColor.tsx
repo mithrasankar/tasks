@@ -36,16 +36,17 @@ export function ChangeColor(): JSX.Element {
                 />
             ))}
 
-            <div
-                data-testid="colored-box"
-                style={{
-                    backgroundColor: myColor ? myColor : "transparent",
-                    width: "100px",
-                    height: "50px",
-                    marginTop: "10px"
-                }}
-            >
-                <div>You have chosen {myColor}.</div>
+            <div>
+                You have chosen{" "}
+                <div
+                    data-testid="colored-box"
+                    style={{
+                        backgroundColor: myColor,
+                        display: "inline"
+                    }}
+                >
+                    {myColor}.
+                </div>
             </div>
         </div>
     );
