@@ -17,6 +17,7 @@ export function EditMode(): JSX.Element {
     }
     return (
         <div>
+            <h3>Edit Mode</h3>
             <Form.Switch
                 type="switch"
                 id="edit-switch"
@@ -27,9 +28,6 @@ export function EditMode(): JSX.Element {
             {edit ? (
                 <>
                     <Form.Group controlId="EditName">
-                        <Form.Label>
-                            <h3>Edit Name</h3>
-                        </Form.Label>
                         <Form.Control
                             type="text"
                             value={name}
